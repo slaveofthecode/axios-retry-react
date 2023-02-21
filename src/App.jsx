@@ -7,8 +7,6 @@ export default function App() {
   
   const { getAll, users  } = useUsers();
 
-  // localStorage.clear();
-
   const handleClick = () => {
     getAll();
   }

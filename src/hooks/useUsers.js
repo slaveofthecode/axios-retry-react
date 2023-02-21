@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { getRequest } from '../services/axios-client/verbs';
+import { getUsers } from '../services/users';
 
 export function useUsers() {
 
@@ -36,27 +37,12 @@ export function useUsers() {
         setLoading(true);
 
         try {            
-
-            // const { data } = await getRequest('users');
-            // setData(data);
-
-            setTimeout(async () => {
-
-                // try {
-                //     const { data } = await getRequest('user');
-                //     setData(data);
-                // } catch (error) {
-                //     console.log('error', error);
-                //     setError(error);
-                // }   
-
-                const { data } = await getRequest('users--');
-                setData(data);
-
-            }, 3000);
-
+            const { data } = await getUsers();
+            console.log('DATA', data);
+            setData(data);
+                        
         } catch (error) {
-            console.log('error', error);
+            console.log('THERE WAS AN ERROR', error);
             setError(error);  
         } 
     };
