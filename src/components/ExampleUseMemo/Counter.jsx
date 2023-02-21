@@ -7,7 +7,7 @@ export const Counter = () => {
     return (
         <div>
             <span className='mx-3' > {count} </span>
-            <button type="button" class="btn btn-secondary" onClick={ () => setCount(count + 1) } >+</button>            
+            <button type="button" className="btn btn-secondary" onClick={ () => setCount(count + 1) } >+</button>            
             {useMemo(()=> <FatComponent text='...will be renderized once time' value={count} />, [])}
             {useMemo(()=> <FatComponent text='...will be renderized each 10 times' value={count}/>, [(count % 10 === 0)])}
         </div>

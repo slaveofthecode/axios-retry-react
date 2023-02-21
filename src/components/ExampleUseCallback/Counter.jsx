@@ -13,7 +13,7 @@ export default function Counter ({counter, increment}) {
   return (
     <div>
         <span className='mx-3' > {counter} </span>
-        <button type="button" class="btn btn-secondary" onClick={increment} >+</button>
+        <button type="button" className="btn btn-secondary" onClick={increment} >+</button>
     </div>
   )
 }
