@@ -1,54 +1,98 @@
-import { useState } from 'react';
-import { getRequest } from '../services/axios-client/verbs';
-import { getUsers } from '../services/users';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useCallback, useMemo, useState } from "react";
+import { getUsers, getUser } from "../services/users";
 
 export function useUsers() {
+  const [users, setUsers] = useState({
+    data: [],
+    loading: false,
+    error: null,
+  });
+  const [user, setUser] = useState({
+    data: {},
+    loading: false,
+    error: null,
+  });
 
-    const [users, setUsers] = useState({
+  const getAll = async () => {
+      setUsers({
+          data: [],
+          loading: true,
+          error: null
+      });
+
+      try {
+
+          const { data: users } = await getUsers();
+          setUsers({
+              data: users,
+              loading: false,
+              error: null
+          });
+
+      } catch (error) {
+          setUsers({
+              data: [],
+              loading: false,
+              error: error
+          });
+      }
+  };
+
+  const memoizedValueGetById = useCallback(async (id) => {
+    setUser({
         data: [],
-        loading: false,
-        error: null        
+        loading: true,
+        error: null
     });
 
-    function setLoading () {
-        setUsers({
-            data: [],
-            loading: true,
-            error: null
-        });
-    }
-    function setData(data){
-        setUsers({
-            data: data,
+    try {
+
+        const { data: user } = await getUser(id);
+        setUser({
+            data: user,
             loading: false,
-            error: null
+            error: null        
         });
-    }
-    function setError (error){
-        setUsers({
+
+    } catch (error) {
+        setUser({
             data: [],
             loading: false,
             error: error
         });
     }
+}, []);
 
-    const getAll = async () => {
-        
-        setLoading(true);
+  const getById = async (id) => {    
+    return memoizedValueGetById(id);
 
-        try {            
-            const { data } = await getUsers();
-            console.log('DATA', data);
-            setData(data);
-                        
-        } catch (error) {
-            console.log('THERE WAS AN ERROR', error);
-            setError(error);  
-        } 
-    };
+    // setUser({
+    //     data: [],
+    //     loading: true,
+    //     error: null
+    // });
 
-    return { getAll, users };
+    // try {
+
+    //     const { data: user } = await getUser(id);
+    //     setUser({
+    //         data: user,
+    //         loading: false,
+    //         error: null        
+    //     });
+
+    // } catch (error) {
+    //     setUser({
+    //         data: [],
+    //         loading: false,
+    //         error: error
+    //     });
+    // }
+
+  };
+
+//   const memoizedValueGetById = useMemo();
+
+  return { getAll, users, getById, user };
 }
-
-
-

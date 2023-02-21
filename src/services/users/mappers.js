@@ -1,6 +1,6 @@
-export const mapperAllUsers = (data) => { 
+export const mapperAllUsers = (users) => { 
     return {
-        data: data.map(user => ({
+        data: users.map(user => ({
             id: user.id,
             name: user.name,
             username: user.username,

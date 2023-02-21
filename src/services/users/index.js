@@ -1,27 +1,21 @@
-import { getRequest } from '../axios-client/verbs';
-import { mapperAllUsers } from './mapper';
-import resultAllUsers from './mocks/all.json';
+import axios from 'axios';
+import { mapperAllUsers } from './mappers';
+import usersMock from './mocks/users.json';
 
-export const getUsers = () => {
+export const getUsers = async () => {
 
-    // return callUsingMockData();
-    return callWithSeveralTries();
+    const { data: allUsers } = await axios.get('https://jsonplaceholder.typicode.com/users'); // Real data
+    // const { data: allUsers } = await Promise.resolve({ data: usersMock }); // Mock data
+    
+    const dataMapped = mapperAllUsers(allUsers);
+
+    return dataMapped;
 };
 
-function callUsingMockData() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const allUsers = mapperAllUsers(resultAllUsers);
-            resolve(allUsers);
-        }, 3000);
-    });
-}
+export const getUser = async (id) => {
+    const { data: user } = await axios.get(`https://jsonplaceholder.typicode.com/users/${id}`);
 
-async function callWithSeveralTries() {
+    const dataMapped = mapperAllUsers([user]);
 
-    
-
-    const result = await getRequest('users');
-    const allUsers = mapperAllUsers(resultAllUsers);
-    return allUsers;
-}
+    return dataMapped;
+};

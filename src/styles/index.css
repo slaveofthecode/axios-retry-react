@@ -1,10 +1,15 @@
+@import 'bootstrap/dist/css/bootstrap.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import './classes.css';
+
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
-  line-height: 1.5;
-  color: #333;
-  background-color: #fff;
+}
+
+* {
+  box-sizing: border-box;
   margin: 0;
-  padding: 1rem;
+  padding: 0;
 }
 
